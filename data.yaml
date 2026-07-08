@@ -1,0 +1,19 @@
+# data.yaml para Google Colab
+
+# 'path' debe ser la ruta raíz del repositorio clonado en Colab.
+# Al clonar un repo, generalmente es /content/nombre-de-tu-repo
+path: /content/nombre-de-tu-repo
+
+# Si dentro de tu repo creaste la carpeta 'dataset_split' con los .txt
+train: dataset_split/train.txt
+val: dataset_split/val.txt
+test: dataset_split/test.txt
+
+# Clases
+nc: 5
+names:
+  0: pepsi_bottle
+  1: water_bottle
+  2: generic_bottle
+  3: aluminum_can
+  4: unknown
