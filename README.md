@@ -23,7 +23,7 @@ El proyecto consiste en el **reentrenamiento del modelo YOLOv8n** para la detecc
 El trabajo abarcó dos etapas principales. La primera consistió en el **desarrollo de un conjunto de scripts Python para ejecución local**, destinados a la construcción del dataset: extracción de frames desde videos, pre-filtrado automático con YOLOv8 preentrenado, organización del dataset y una aplicación de escritorio para el re-etiquetado manual asistido de imágenes. La segunda etapa se llevó a cabo en un **notebook de Google Colab**, que contiene tanto el código necesario para el reentrenamiento y la validación del modelo, como el informe técnico completo del proyecto, incluyendo la descripción del escenario, el pipeline de generación del dataset, los problemas encontrados, los desafíos afrontados y sus soluciones, los resultados obtenidos y las conclusiones finales.
 
 
-(<img width="117" height="20" alt="image" src="https://github.com/user-attachments/assets/36fbc2ee-110c-447d-8063-1a18627c52e1" />)[https://colab.research.google.com/github/facundomatoff/DOC26_IAM_TP/blob/main/Doc26_IAM_Trabajo_Final.ipynb]
+[<img width="117" height="20" alt="image" src="https://github.com/user-attachments/assets/36fbc2ee-110c-447d-8063-1a18627c52e1" />](https://colab.research.google.com/github/facundomatoff/DOC26_IAM_TP/blob/main/Doc26_IAM_Trabajo_Final.ipynb)
 
 
 
@@ -31,7 +31,6 @@ El trabajo abarcó dos etapas principales. La primera consistió en el **desarro
 
 📓 **[Acceder al notebook en Google Colab](https://colab.research.google.com)**
 
-https://colab.research.google.com/github/martinezger/vehicle-detection-rcnn/blob/main/vehicle_detection.ipynb
 
 ---
 
