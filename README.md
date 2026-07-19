@@ -1,8 +1,8 @@
 # 🧊 Detección de Bebidas en Heladeras Exhibidoras — YOLOv8n
 
-Doctorado 2026 - Introducción al Aprendizaje de Máquinas - Trabajo Final
+> Trabajo Final — Introducción al Aprendizaje de Máquinas · Doctorado en Informática 2026
 
-> Sistema de visión por computadora para auditoría automática de productos en heladeras comerciales mediante detección de objetos en tiempo real.
+Este repositorio contiene el trabajo final de la materia **Introducción al Aprendizaje de Máquinas**, correspondiente al **Doctorado en Informática 2026**. El trabajo consiste en el desarrollo de un sistema de visión por computadora para la auditoría automática de productos en heladeras comerciales, implementado mediante detección de objetos en tiempo real con YOLOv8n.
 
 ---
 
@@ -12,18 +12,17 @@ Doctorado 2026 - Introducción al Aprendizaje de Máquinas - Trabajo Final
 - [Clases Detectadas](#clases-detectadas)
 - [Estructura del Repositorio](#estructura-del-repositorio)
 - [Requisitos](#requisitos)
-- [Uso Rápido](#uso-rápido)
-- [Resultados](#resultados)
 - [Informe Técnico](#informe-técnico)
-- [Referencias](#referencias)
 
 ---
 
 ## Descripción del Proyecto
 
-Un cliente propietario de heladeras exhibidoras comerciales requería verificar automáticamente que los productos almacenados correspondieran a su propio catálogo, descartando la presencia de productos de la competencia. Se instalaron cámaras inteligentes en las heladeras que capturan un video corto cada vez que se abre la puerta. Esos videos son procesados frame a frame para detectar qué bebidas son extraídas.
+El proyecto consiste en el **reentrenamiento del modelo YOLOv8n** para la detección específica de bebidas en heladeras exhibidoras comerciales. El escenario de aplicación involucra cámaras inteligentes instaladas en heladeras que capturan videos cada vez que se abre la puerta, con el objetivo de verificar que los productos almacenados correspondan al catálogo autorizado del cliente y no a productos de la competencia.
 
-El sistema fue desarrollado sobre **YOLOv8 Nano** (`yolov8n`), reentrenado con un dataset propio construido desde cero mediante videos de prueba en condiciones controladas. El modelo resultante es lo suficientemente liviano para ejecutarse directamente en el hardware embebido de las cámaras inteligentes.
+El trabajo abarcó dos etapas principales. La primera consistió en el **desarrollo de un conjunto de scripts Python para ejecución local**, destinados a la construcción del dataset: extracción de frames desde videos, pre-filtrado automático con YOLOv8 preentrenado, organización del dataset y una aplicación de escritorio para el re-etiquetado manual asistido de imágenes. La segunda etapa se llevó a cabo en un **notebook de Google Colab**, que contiene tanto el código necesario para el reentrenamiento y la validación del modelo, como el informe técnico completo del proyecto, incluyendo la descripción del escenario, el pipeline de generación del dataset, los problemas encontrados, los desafíos afrontados y sus soluciones, los resultados obtenidos y las conclusiones finales.
+
+📓 **[Acceder al notebook en Google Colab](https://colab.research.google.com)**
 
 ---
 
@@ -43,6 +42,14 @@ El sistema fue desarrollado sobre **YOLOv8 Nano** (`yolov8n`), reentrenado con u
 
 ```
 DOC26_IAM_TP/
+├── scripts/                    ← Scripts Python para ejecución local
+│   ├── extract_frames.py       ← Extracción de frames desde videos/GIFs
+│   ├── identity_bottles.py     ← Pre-filtrado con YOLOv8 preentrenado
+│   ├── isolate_empty_labels.py ← Limpieza de etiquetas vacías
+│   ├── train_dataset_generator.py ← Organización del dataset para YOLO
+│   ├── analyze_dataset.py      ← Reporte de distribución del dataset
+│   ├── generate_split_lists.py ← Generación de listas train/val/test
+│   └── desktop.py              ← App de re-etiquetado manual asistido
 ├── dataset/
 │   ├── images/
 │   │   ├── train/
@@ -54,11 +61,11 @@ DOC26_IAM_TP/
 │       └── test/
 ├── runs/
 │   └── detect/
-│       ├── train/          ← Pesos y métricas del entrenamiento
-│       └── val/            ← Resultados de validación
-├── data.yaml               ← Configuración de clases y rutas
-├── DOC26_IAM_TP.ipynb      ← Notebook principal (entrenamiento + informe)
-├── DOC26_IAM_TP.ipynb      ← Notebook principal (entrenamiento + informe)
+│       ├── train/              ← Pesos y métricas del entrenamiento
+│       └── val/                ← Resultados de validación
+├── data.yaml                   ← Configuración de clases y rutas
+├── DOC26_IAM_TP.ipynb          ← Notebook principal (informe + entrenamiento)
+├── [Python Scripts].py         ← Scripts Python utilizados para la generación del dataset
 └── README.md
 ```
 
@@ -80,88 +87,20 @@ pip install ultralytics
 
 ---
 
-## Uso Rápido
-
-### Entrenamiento
-
-```python
-from ultralytics import YOLO
-
-model = YOLO('yolov8n.pt')  # Pesos preentrenados en COCO
-
-model.train(
-    data='data.yaml',
-    epochs=50,
-    imgsz=320
-)
-```
-
-### Validación y Testing con nuevo Pesos
-
-```python
-model = YOLO('runs/detect/train/weights/best.pt')
-metrics = model.val(data='data.yaml')
-```
-
-### Inferencia sobre una imagen
-
-```python
-results = model.predict(source='ruta/a/imagen.jpg', conf=0.25)
-results[0].show()
-```
-
----
-
-## Resultados
-
-### Métricas de Validación (conjunto de test — 303 imágenes)
-
-| Clase | Precisión | Recall | mAP50 | mAP50-95 |
-|---|---|---|---|---|
-| **Global** | **0.843** | **0.840** | **0.908** | **0.780** |
-| `pepsi_bottle` | 0.905 | 0.908 | 0.933 | 0.804 |
-| `water_bottle` | 0.899 | 0.912 | 0.928 | 0.777 |
-| `generic_bottle` | 0.811 | 0.716 | 0.886 | 0.786 |
-| `aluminum_can` | 0.767 | 0.833 | 0.915 | 0.804 |
-| `unknown` | 0.833 | 0.831 | 0.878 | 0.728 |
-
-**Velocidad de inferencia:** ~3.4 ms/imagen en GPU Tesla T4 (~294 FPS)
-
-### Curvas de Entrenamiento
-
-Las pérdidas de entrenamiento y validación convergen de forma paralela durante las 50 épocas, sin señales de sobreajuste.
-
-![Curvas de entrenamiento](runs/detect/train/results.png)
-
-### Matriz de Confusión
-
-![Matriz de Confusión Normalizada](runs/detect/val/confusion_matrix_normalized.png)
-
----
-
 ## Informe Técnico
 
-El informe técnico completo se encuentra dentro del notebook principal `DOC26_IAM_TP.ipynb`, e incluye:
+El informe técnico completo, los resultados del entrenamiento, las métricas de validación y las conclusiones del proyecto se encuentran documentados íntegramente dentro del notebook principal **`DOC26_IAM_TP.ipynb`**. Allí se detallan:
 
 1. **Introducción** — Descripción del problema y desafíos del escenario
-2. **Algoritmo** — Arquitectura YOLOv8n, hiperparámetros, justificación de la selección
-3. **Solución implementada** — Pipeline completo y decisiones técnicas tomadas
-4. **Resultados** — Análisis de curvas de entrenamiento, métricas de validación y matriz de confusión
-5. **Conclusiones** — Evaluación del rendimiento y recomendaciones
+2. **Algoritmo** — Arquitectura YOLOv8n, hiperparámetros y justificación de la selección del modelo
+3. **Pipeline de construcción del dataset** — Scripts utilizados en cada etapa, decisiones tomadas y problemas encontrados
+4. **Reentrenamiento y validación** — Código de entrenamiento, curvas de aprendizaje y análisis de resultados
+5. **Conclusiones** — Evaluación del rendimiento, limitaciones y recomendaciones
 6. **Referencias** — Papers que validan el uso de YOLO para este tipo de escenario
 
----
-
-## Referencias
-
-1. Redmon, J. et al. (2016). *You only look once: Unified, real-time object detection.* CVPR. https://doi.org/10.1109/CVPR.2016.91
-2. Jocher, G., Chaurasia, A., & Qiu, J. (2023). *Ultralytics YOLO* (v8.0.0). https://github.com/ultralytics/ultralytics
-3. Lin, T. Y. et al. (2014). *Microsoft COCO: Common objects in context.* ECCV. https://doi.org/10.1007/978-3-319-10602-1_48
-4. Terven, J. et al. (2023). *A Comprehensive Review of YOLO Architectures.* Machine Learning and Knowledge Extraction, 5(4). https://doi.org/10.3390/make5040083
-5. Li, X. et al. (2020). *Generalized Focal Loss.* NeurIPS. https://arxiv.org/abs/2006.04388
-6. Hussain, M. (2023). *YOLO-v1 to YOLO-v8, the Rise of YOLO.* Machines, 11(7). https://doi.org/10.3390/machines11070677
-7. Jiang, P. et al. (2022). *A Review of YOLO Algorithm Developments.* Procedia Computer Science, 199. https://doi.org/10.1016/j.procs.2022.01.135
+📓 **[Abrir informe completo en Google Colab](https://colab.research.google.com)**
 
 ---
 
-*Proyecto desarrollado en Google Colab · GPU Tesla T4 · Ultralytics 8.4.95 · PyTorch 2.11.0*
+*Trabajo Final — Introducción al Aprendizaje de Máquinas · Doctorado en Informática 2026*  
+*Desarrollado en Google Colab · GPU Tesla T4 · Ultralytics 8.4.95 · PyTorch 2.11.0*
