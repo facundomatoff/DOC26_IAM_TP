@@ -1,10 +1,15 @@
-# data.yaml para Google Colab
+# data.yaml
 
-# 'path' debe ser la ruta raíz del repositorio clonado en Colab.
-# Al clonar un repo, generalmente es /content/nombre-de-tu-repo
-path: /content/nombre-de-tu-repo
+# 'path' apunta a la ruta raíz del repositorio clonado en Colab.
+# Al clonar un repo, se debe ubicar la carpeta en la ruta: /content/DOC26_IAM_TP
+path: /content/DOC26_IAM_TP
 
-# Si dentro de tu repo creaste la carpeta 'dataset_split' con los .txt
+# La carpeta 'datasets' posee todas las imagenes y etiquetas (labels)
+# Se crearon 3 archivos con los IDs de las imagenes que serán utilizadas para: Entrenamiento, Validación y Testeo.
+# Estos archivos permiten formatear la distribución de las imágenes y los porcentajes de distribución.
+# El modelo busca en la 'ruta' la información para ser reentranado.
+
+# Dentro de los archivos, se encuentra la carpeta 'dataset_split' con los .txt con la lista de imágenes
 train: dataset_split/train.txt
 val: dataset_split/val.txt
 test: dataset_split/test.txt
