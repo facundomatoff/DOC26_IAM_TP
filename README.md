@@ -52,10 +52,12 @@ DOC26_IAM_TP/
 │       ├── train/
 │       ├── val/
 │       └── test/
+│
 ├── runs/
 │   └── detect/
 │       ├── train/              ← Pesos y métricas del entrenamiento
 │       └── val/                ← Resultados de validación
+│
 ├── data.yaml                   ← Configuración de clases y rutas
 │
 ├── DOC26_IAM_TP.ipynb          ← Notebook principal (informe + entrenamiento)
