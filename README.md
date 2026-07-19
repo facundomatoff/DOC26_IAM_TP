@@ -53,10 +53,10 @@ DOC26_IAM_TP/
 │       ├── val/
 │       └── test/
 │
-├── runs/
-│   └── detect/
-│       ├── train/              ← Pesos y métricas del entrenamiento
-│       └── val/                ← Resultados de validación
+├── dataset_split/
+│   ├── test.txt                ← Distribución de imágenes y etiquetas para las pruebas
+│   ├── train.txt               ← Distribución de imágenes y etiquetas para el entrenamiento
+│   └── val.txt                 ← Distribución de imágenes y etiquetas para la validación
 │
 ├── data.yaml                   ← Configuración de clases y rutas
 │
