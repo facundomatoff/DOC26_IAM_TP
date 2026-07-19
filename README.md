@@ -1,4 +1,4 @@
-# 🧊 Detección de Bebidas en Heladeras Exhibidoras — YOLOv8n
+# Detección de Bebidas en Heladeras Exhibidoras — YOLOv8n
 
 > Trabajo Final — Introducción al Aprendizaje de Máquinas · Doctorado en Informática 2026
 
