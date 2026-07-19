@@ -42,14 +42,7 @@ El trabajo abarcó dos etapas principales. La primera consistió en el **desarro
 
 ```
 DOC26_IAM_TP/
-├── scripts/                    ← Scripts Python para ejecución local
-│   ├── extract_frames.py       ← Extracción de frames desde videos/GIFs
-│   ├── identity_bottles.py     ← Pre-filtrado con YOLOv8 preentrenado
-│   ├── isolate_empty_labels.py ← Limpieza de etiquetas vacías
-│   ├── train_dataset_generator.py ← Organización del dataset para YOLO
-│   ├── analyze_dataset.py      ← Reporte de distribución del dataset
-│   ├── generate_split_lists.py ← Generación de listas train/val/test
-│   └── desktop.py              ← App de re-etiquetado manual asistido
+│
 ├── dataset/
 │   ├── images/
 │   │   ├── train/
@@ -64,8 +57,18 @@ DOC26_IAM_TP/
 │       ├── train/              ← Pesos y métricas del entrenamiento
 │       └── val/                ← Resultados de validación
 ├── data.yaml                   ← Configuración de clases y rutas
+│
 ├── DOC26_IAM_TP.ipynb          ← Notebook principal (informe + entrenamiento)
-├── [Python Scripts].py         ← Scripts Python utilizados para la generación del dataset
+│
+├── scripts/                    ← Scripts Python para ejecución local
+│   ├── extract_frames.py       ← Extracción de frames desde videos/GIFs
+│   ├── identity_bottles.py     ← Pre-filtrado con YOLOv8 preentrenado
+│   ├── isolate_empty_labels.py ← Limpieza de etiquetas vacías
+│   ├── train_dataset_generator.py ← Organización del dataset para YOLO
+│   ├── analyze_dataset.py      ← Reporte de distribución del dataset
+│   ├── generate_split_lists.py ← Generación de listas train/val/test
+│   └── desktop.py              ← App de re-etiquetado manual asistido
+│
 └── README.md
 ```
 
